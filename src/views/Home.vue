@@ -12,11 +12,7 @@
     components: {
     },
     async mounted() {
-      let res = await this.$http.genJSSDKConfig({
-        url: location.href
-      })
-
-      console.log(res)
+      console.log(this.$wx)
     }
   }
 </script>
