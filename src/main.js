@@ -8,7 +8,7 @@ import jweixin from '@/plugins/jweixin'
 Vue.config.productionTip = false
 
 Vue.use(http)
-Vue.use(jweixin, { jsApiList: ['chooseImage'] })
+Vue.use(jweixin)
 
 new Vue({
   router,
