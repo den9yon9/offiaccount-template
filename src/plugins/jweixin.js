@@ -4,7 +4,7 @@ export default {
 
         Vue.prototype.$wx = async function (jsApiList, ifUpdateTicket = false) {
             let flag = true
-            let { result: { appId, timestamp, nonceStr, signature } } = await Vue.prototype.$http.genJSSDKConfig({ url: location.href.split('#')[0], ifUpdateTicket })
+            let { appId, timestamp, nonceStr, signature } = await Vue.prototype.$http.genJSSDKConfig({ url: location.href.split('#')[0], ifUpdateTicket })
             return await new Promise(resolve => {
                 wx.config({
                     appId,

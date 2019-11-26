@@ -18,7 +18,7 @@ export default {
                     method, url, params, data, headers
                 })
                 if (!res.data.success) throw new Error(res.data.msg)
-                return res.data
+                return res.data.result
             } catch (err) {
                 alert(err.message)
                 throw err
@@ -33,6 +33,31 @@ export default {
                     url: '/weixin/offiaccount/genJSSDKConfig',
                     method: 'post',
                     data
+                })
+            },
+
+            // 供wx.chooseCard使用
+            async genCouponSignature(data) {
+                return await request({
+                    url: '/weixin/coupon/genCouponSignature',
+                    method: 'post',
+                    data
+                })
+            },
+
+            // 供wx.addCard使用
+            async genCouponCardSign(data) {
+                return await request({
+                    url: '/weixin/coupon/genCouponCardSign',
+                    method: 'post',
+                    data
+                })
+            },
+
+            // 解码encrypt_code
+            async decryptCode(encryptCode) {
+                return await request({
+                    url: `/weixin/coupon/decryptCode/${encryptCode}`,
                 })
             }
         }
