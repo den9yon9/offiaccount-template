@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
     install(Vue) {
         // 不会变化的头参数
-        axios.defaults.baseURL = 'http://172t8v1421.imwork.net/sanwazi'
+        axios.defaults.baseURL = 'http://xface.mindcar.cn/wxmp'
         axios.defaults.headers.post['Content-Type'] = 'application/json';
         axios.defaults.withCredentials = true;
 
@@ -28,36 +28,10 @@ export default {
         }
 
         Vue.prototype.$http = {
-            async genJSSDKConfig(data) {
-                return await request({
-                    url: '/weixin/offiaccount/genJSSDKConfig',
-                    method: 'post',
-                    data
-                })
-            },
-
-            // 供wx.chooseCard使用
-            async genCouponSignature(data) {
-                return await request({
-                    url: '/weixin/coupon/genCouponSignature',
-                    method: 'post',
-                    data
-                })
-            },
-
-            // 供wx.addCard使用
-            async genCouponCardSign(data) {
-                return await request({
-                    url: '/weixin/coupon/genCouponCardSign',
-                    method: 'post',
-                    data
-                })
-            },
-
-            // 解码encrypt_code
-            async decryptCode(encryptCode) {
-                return await request({
-                    url: `/weixin/coupon/decryptCode/${encryptCode}`,
+            getOpenidByCode(params) {
+                return request({
+                    url: '/api/wechat/card/getOpenid',
+                    params
                 })
             }
         }
