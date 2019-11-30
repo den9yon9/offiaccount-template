@@ -31,24 +31,28 @@ router.beforeEach(async (to, from, next) => {
   // 处理地址中的hotel_id参数
   let hotel_id = localStorage.getItem('hotel_id')
   if (!hotel_id) {
-    let search = window.location.search.split('?')[0]
+    let search = window.location.search.split('?')[1]
     let hotel_id = qs.parse(search).hotel_id
-    if (!hotel_id) alert('未设置hotel_id')
+    if (!hotel_id) {
+      alert('未设置hotel_id')
+      return next(false)
+    }
     else localStorage.setItem('hotel_id', hotel_id)
   }
 
   // 处理地址中的code参数
   let openid = localStorage.getItem('openid')
   if (!openid) {
-    let search = window.location.search.split('?')[0]
+    let search = window.location.search.split('?')[1]
     let code = qs.parse(search).code
     if (code) {
-      let openid = await Vue.prototype.$http.getOpenidByCode(code)
+      let openid = await Vue.prototype.$http.getOpenidByCode({code})
       localStorage.setItem('openid', openid)
       next()
     } else {
+      let redirect_uri = encodeURIComponent(`http://xface.mindcar.cn/public/offiaccount/?hotel_id=${localStorage.getItem('hotel_id')}#${to.path}`)
       window.location.replace(
-        `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56c01c125d7280ef&redirect_uri=${encodeURIComponent('http://xface.mindcar.cn/offiaccount/#/login')}&response_type=code&scope=snsapi_base&state=test&connect_redirect=1#wechat_redirect`
+        `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx56c01c125d7280ef&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_base&state=test&connect_redirect=1#wechat_redirect`
       )
     }
   } else {

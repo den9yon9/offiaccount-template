@@ -11,7 +11,7 @@ export default {
             method = 'get', url, params, data, headers
         }) {
             // 会变化的头参数
-            axios.defaults.headers.common['token'] = localStorage.getItem('token');
+            axios.defaults.headers.common['hotelid'] = localStorage.getItem('hotel_id');
             // start loading
             try {
                 let res = await axios({
